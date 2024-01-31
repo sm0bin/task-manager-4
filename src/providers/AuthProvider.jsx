@@ -35,11 +35,11 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, twitterProvider);
     }
 
-    const updateUser = (name, photoURL) => {
+    const updateUser = (name) => {
         setLoading(true);
         return updateProfile(auth.currentUser, {
             displayName: name,
-            photoURL: photoURL
+            // photoURL: photoURL
         });
     }
 

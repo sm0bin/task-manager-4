@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { toast } from "react-hot-toast";
 
 const SignUp = () => {
-    const { signUp, googleSignIn, twitterSignIn } = useContext(AuthContext);
+    const { signUp, updateUser, googleSignIn, twitterSignIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,6 +14,13 @@ const SignUp = () => {
         signUp(email, password)
             .then(res => {
                 console.log(res.user);
+                updateUser(form.name.value)
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
                 toast.success('Sign Up Successful!');
                 navigate("/");
 
