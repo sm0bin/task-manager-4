@@ -7,15 +7,17 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 
-const UpdateForm = ({ updateTask, refetchTasks, startDate, setStartDate }) => {
+const UpdateForm = ({ refetchTasks, updateTask }) => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const states = ["To Do", "Ongoing", "Completed"];
-    const priorities = ["Low", "Moderate", "High"];
-    // const [startDate, setStartDate] = useState(updateTask?.deadline);
+    // const priorities = ["Low", "Moderate", "High"];
+    const [startDate, setStartDate] = useState(updateTask?.deadline);
     // const [startDate, setStartDate] = useState(
     //     setHours(setMinutes(new Date(updateTask?.deadline), 30), 16),
     // );
+
+
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
         return (
             <button type="button" className="input input-bordered w-full" onClick={onClick} ref={ref}>
@@ -33,7 +35,7 @@ const UpdateForm = ({ updateTask, refetchTasks, startDate, setStartDate }) => {
         e.preventDefault();
         const task = {
             title: e.target.title.value,
-            priority: e.target.priority.value,
+            // priority: e.target.priority.value,
             deadline: startDate,
             state: e.target.state.value,
             details: e.target.details.value,
@@ -49,6 +51,7 @@ const UpdateForm = ({ updateTask, refetchTasks, startDate, setStartDate }) => {
                 e.target.reset();
                 refetchTasks();
                 document.getElementById('updateTaskModal').close();
+                setStartDate(null);
             }).catch(err => {
                 console.log(err);
             })
@@ -62,8 +65,9 @@ const UpdateForm = ({ updateTask, refetchTasks, startDate, setStartDate }) => {
                 </label>
                 <input name="title" defaultValue={updateTask?.title} type="text" placeholder="Task Title" className="input input-bordered" />
             </div>
-            <div className="grid grid-cols-3 gap-2">
-                <div className="form-control">
+
+            <div className="grid grid-cols-2 gap-2">
+                {/* <div className="form-control">
                     <label className="label">
                         <span className="label-text">Priority</span>
                     </label>
@@ -72,7 +76,7 @@ const UpdateForm = ({ updateTask, refetchTasks, startDate, setStartDate }) => {
                             priorities.map((priority, index) => <option key={index} selected={updateTask?.priority === priority}>{priority}</option>)
                         }
                     </select>
-                </div>
+                </div> */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Deadline</span>
@@ -105,6 +109,7 @@ const UpdateForm = ({ updateTask, refetchTasks, startDate, setStartDate }) => {
                     </select>
                 </div>
             </div>
+
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Details</span>
