@@ -8,7 +8,7 @@ const Navbar = () => {
     console.log(user);
     const navLinksPath = [
         { title: "Home", path: "/" },
-        // { title: "Dashboard", path: "/dashboard" },
+        { title: "Dashboard", path: "/dashboard" },
         { title: "About", path: "/about" },
         { title: "Contact", path: "/contact" },
     ];
