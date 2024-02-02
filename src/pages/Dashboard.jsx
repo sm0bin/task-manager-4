@@ -9,13 +9,17 @@ import { useDrag, useDrop } from "react-dnd";
 import { useState } from "react";
 import AddTaskForm from "../components/dashboard/AddTaskForm";
 import { setHours, setMinutes } from "date-fns";
+import { Link, Outlet } from "react-router-dom";
 // import { set } from "react-hook-form";
 
 
 
+// Dashboard Component
 const Dashboard = () => {
+    const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const [updateTask, setUpdateTask] = useState({});
+    const [taskId, setTaskId] = useState(null);
     const [tasks, isPendingTasks, refetchTasks] = useLoadDataSecure(`/tasks/${user.email}`, "tasks");
     const states = ["To Do", "Ongoing", "Completed"];
     const [startDate, setStartDate] = useState(
@@ -23,29 +27,44 @@ const Dashboard = () => {
     );
 
     const handleUpdateTask = (task) => {
-        console.log(task);
-        setStartDate(new Date(task.deadline));
-        task.deadline = startDate;
-        setUpdateTask(task);
-        console.log(updateTask);
+        // console.log(task);
+
+        // setTaskId(task._id)
+        //     .then(() => {
+        //         document.getElementById('updateTaskModal').showModal();
+        //     })
+        // axiosSecure.get(`/tasks/task/${taskId}`)
+        //     .then(res => {
+        //         console.log(res.data);
+        //         setUpdateTask(res.data);
+        //         setStartDate(new Date(res.data.deadline));
+        //         document.getElementById('updateTaskModal').showModal();
+        //     }).catch(err => {
+        //         console.log(err);
+        //     })
+
+        setUpdateTask(task)
         if (updateTask) {
             document.getElementById('updateTaskModal').showModal();
         }
     }
 
+
+
     return (
         <div className="h-screen overflow-y-auto bg-slate-50 pt-20 pb-8 px-4">
-            {/* <div className="overflow-y-auto"> */}
 
             {/* Add button */}
-            <button onClick={() => document.getElementById('addTaskModal').showModal()} className="fixed bottom-12 right-12 btn btn-circle btn-lg btn-neutral ">
+            <button onClick={() => document.getElementById('addTaskModal').showModal()} className="fixed bottom-12 right-12 btn btn-lg btn-neutral ">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-8 h-8">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
+                Add Task
             </button>
 
+
             {/* Tasks Section */}
-            <section className="grid  grid-cols-1 lg:grid-cols-3 gap-4 my-4">
+            <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4 h-full">
                 {
                     states.map(state => {
                         return (
@@ -54,6 +73,7 @@ const Dashboard = () => {
                     })
                 }
             </section>
+
 
             {/* Add new Task Modal */}
             <dialog key={1} id="addTaskModal" className="modal">
@@ -73,17 +93,20 @@ const Dashboard = () => {
                     <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
-                    <UpdateForm refetchTasks={refetchTasks} updateTask={updateTask} startDate={startDate} setStartDate={setStartDate} />
+                    <UpdateForm refetchTasks={refetchTasks} updateTask={updateTask} />
+                    {/* <Outlet /> */}
+                    {/* <UpdateForm refetchTasks={refetchTasks} updateTask={updateTask} startDate={startDate} setStartDate={setStartDate} /> */}
                 </div>
             </dialog>
 
         </div>
-        // </div >
     );
 };
 
 
 
+
+// Section Component
 const Section = ({ state, tasks, refetchTasks, handleUpdateTask }) => {
     const axiosSecure = useAxiosSecure();
 
@@ -134,6 +157,8 @@ const Section = ({ state, tasks, refetchTasks, handleUpdateTask }) => {
 }
 
 
+
+// Task Component
 const Task = ({ task, refetchTasks, handleUpdateTask }) => {
     const axiosSecure = useAxiosSecure();
 
@@ -177,8 +202,23 @@ const Task = ({ task, refetchTasks, handleUpdateTask }) => {
         <div ref={drag} key={task?._id} className={`border ${isDragging ? 'opacity-30 cursor-grabbing' : ''} cursor-grab bg-gray-50 rounded-md overflow-hidden group`}>
 
             <div className="border-b px-4 py-2 flex items-center justify-between gap-6">
-                <h4 className="font-semibold text-gray-600 text-xl">{task?.title}</h4>
-
+                <div className="flex gap-3 items-center">
+                    <h4 className="font-semibold text-gray-600 text-xl shrink">{task?.title}</h4>
+                    {/* <div className="badge badge-secondary">{task?.deadline}</div> */}
+                    <div className="badge badge-neutral whitespace-nowrap">
+                        {task?.deadline && (
+                            new Date(task.deadline).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric',
+                                // hour: 'numeric',
+                                // minute: 'numeric',
+                                // second: 'numeric',
+                                // timeZoneName: 'short',
+                            })
+                        )}
+                    </div>
+                </div>
                 <div className="flex">
                     <button onClick={() => deleteTask(task._id)} className="btn btn-ghost btn-circle text-transparent group-hover:text-rose-400">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -192,6 +232,12 @@ const Task = ({ task, refetchTasks, handleUpdateTask }) => {
                             <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
                         </svg>
                     </button>
+                    {/* <Link to={`/update/${task._id}`} className="btn btn-ghost btn-circle text-transparent group-hover:text-green-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                            <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                            <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                        </svg>
+                    </Link> */}
                 </div>
             </div>
 

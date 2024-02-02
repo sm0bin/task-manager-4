@@ -12,7 +12,7 @@ const UpdateForm = ({ refetchTasks, updateTask }) => {
     const axiosSecure = useAxiosSecure();
     const states = ["To Do", "Ongoing", "Completed"];
     // const priorities = ["Low", "Moderate", "High"];
-    const [startDate, setStartDate] = useState(updateTask?.deadline);
+    // const [startDate, setStartDate] = useState(new Date(updateTask.deadline));
     // const [startDate, setStartDate] = useState(
     //     setHours(setMinutes(new Date(updateTask?.deadline), 30), 16),
     // );
@@ -36,7 +36,7 @@ const UpdateForm = ({ refetchTasks, updateTask }) => {
         const task = {
             title: e.target.title.value,
             // priority: e.target.priority.value,
-            deadline: startDate,
+            deadline: e.target.deadline.value,
             state: e.target.state.value,
             details: e.target.details.value,
             email: user.email
@@ -85,7 +85,7 @@ const UpdateForm = ({ refetchTasks, updateTask }) => {
                         customInput={<ExampleCustomInput />}
                         selected={startDate} onChange={(date) => setStartDate(date)} /> */}
 
-                    <DatePicker
+                    {/* <DatePicker
                         customInput={<ExampleCustomInput />}
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
@@ -95,8 +95,8 @@ const UpdateForm = ({ refetchTasks, updateTask }) => {
                         timeIntervals={15}
                         // dateFormat="Pp"
                         dateFormat="dd/MM/yyyy hh:mm a"
-                    />
-                    {/* <input name="deadline" defaultValue={updateTask?.deadline} type="text" placeholder="Date" className="input input-bordered" /> */}
+                    /> */}
+                    <input name="deadline" defaultValue={new Date(updateTask.deadline).toISOString().split('T')[0]} type="date" placeholder="Date" className="input input-bordered" />
                 </div>
                 <div className="form-control">
                     <label className="label">

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 const Task = ({ task, refetchTasks, setUpdateTask, handleUpdateTask }) => {
     const axiosSecure = useAxiosSecure();
-    const { _id, title, details, deadline, priority, state } = task;
+    const { _id, title, details, deadline } = task;
 
     const deleteTask = () => {
         Swal.fire({
@@ -50,8 +50,9 @@ const Task = ({ task, refetchTasks, setUpdateTask, handleUpdateTask }) => {
     return (
         <div className="bg-gray-50 rounded-md overflow-hidden group">
             <div className="bg-neutral px-4 py-3 flex items-center justify-between gap-6">
-                <h4 className="font-semibold text-gray-50 text-lg">{title}</h4>
                 <div className="flex">
+                    <h4 className="font-semibold text-gray-50 text-lg">{title}</h4>
+                    <div className="badge badge-secondary">{deadline}</div>
 
                     <button onClick={deleteTask} className="btn btn-ghost btn-circle text-transparent group-hover:text-rose-400">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">

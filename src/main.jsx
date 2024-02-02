@@ -18,6 +18,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 const queryClient = new QueryClient()
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import UpdateForm from "./components/dashboard/UpdateForm";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+        children: [
+          {
+            path: "/update/:id",
+            element: <UpdateForm />,
+          },
+        ],
       },
       {
         path: "/about",

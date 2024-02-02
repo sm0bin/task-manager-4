@@ -21,9 +21,9 @@ const AddTaskForm = ({ refetchTasks }) => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     // const [startDate, setStartDate] = useState(new Date());
-    const [startDate, setStartDate] = useState(
-        new Date(),
-    );
+    // const [startDate, setStartDate] = useState(
+    //     new Date(),
+    // );
 
 
     const {
@@ -39,7 +39,6 @@ const AddTaskForm = ({ refetchTasks }) => {
     const onSubmit = (data) => {
         const task = {
             ...data,
-            deadline: startDate,
             email: user.email
         }
         console.log(task);
@@ -67,8 +66,9 @@ const AddTaskForm = ({ refetchTasks }) => {
                 </label>
                 <input {...register("title")} type="text" placeholder="Task Title" className="input input-bordered" required />
             </div>
-            <div className="grid grid-cols-3 gap-2">
-                <div className="form-control">
+
+            <div className="grid grid-cols-2 gap-2">
+                {/* <div className="form-control">
                     <label className="label">
                         <span className="label-text">Priority</span>
                     </label>
@@ -77,12 +77,12 @@ const AddTaskForm = ({ refetchTasks }) => {
                         <option>Moderate</option>
                         <option>High</option>
                     </select>
-                </div>
+                </div> */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Deadline</span>
                     </label>
-                    <DatePicker
+                    {/* <DatePicker
                         customInput={<ExampleCustomInput />}
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
@@ -92,9 +92,10 @@ const AddTaskForm = ({ refetchTasks }) => {
                         timeIntervals={15}
                         // dateFormat="Pp"
                         dateFormat="dd/MM/yyyy hh:mm a"
-                    />
+                    /> */}
                     {/* <DatePicker customInput={<ExampleCustomInput />}  {...register("deadline")} required selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-                    {/* <input {...register("deadline")} type="text" placeholder="Date" className="input input-bordered" required /> */}
+                    <input {...register("deadline")} type="date" placeholder="Date" className="input input-bordered" required />
+                    {/* {errors.exampleRequired && <span className="text-rose-500 mt-2">This field is required</span>} */}
                 </div>
                 <div className="form-control">
                     <label className="label">
@@ -107,13 +108,15 @@ const AddTaskForm = ({ refetchTasks }) => {
                     </select>
                 </div>
             </div>
+
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">Details</span>
                 </label>
                 <textarea {...register("details", { required: true })} placeholder="Task Details" rows='5' className="textarea textarea-bordered textarea-md w-full" required></textarea>
-                {errors.exampleRequired && <span className="text-rose-500 mt-2">This field is required</span>}
+                {/* {errors.exampleRequired && <span className="text-rose-500 mt-2">This field is required</span>} */}
             </div>
+
             <div className="form-control mt-6">
                 <button className="btn btn-neutral">Add</button>
             </div>

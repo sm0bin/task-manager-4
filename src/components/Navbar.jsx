@@ -8,7 +8,7 @@ const Navbar = () => {
     console.log(user);
     const navLinksPath = [
         { title: "Home", path: "/" },
-        { title: "Dashboard", path: "/dashboard" },
+        // { title: "Dashboard", path: "/dashboard" },
         { title: "About", path: "/about" },
         { title: "Contact", path: "/contact" },
     ];
@@ -44,8 +44,8 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl font-bold">
-                    <img src="/logo.png" alt="logo" className="w-10 h-10" />
-                    ProTaskify</a>
+                    <img src="/task-manager-logo.png" alt="logo" className="w-10 h-10" />
+                    Task Manager</a>
             </div>
 
             <div className="navbar-center hidden lg:flex">
@@ -58,7 +58,7 @@ const Navbar = () => {
                 {
                     user ?
                         <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn m-1 font-semibold text-lg">{user?.displayName}</div>
+                            <div tabIndex={0} role="button" className="btn btn-ghost m-1 font-semibold text-lg">{user?.displayName}</div>
                             <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li>
                                     <a>Profile</a>
@@ -68,7 +68,6 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                     <a onClick={handleLogout} className="">Logout</a>
-
                                 </li>
                             </ul>
                         </div>
