@@ -61,7 +61,7 @@ const SignUp = () => {
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
                     <h1 className="text-5xl font-bold">Sign Up now!</h1>
-                    <p className="py-6">Join the productivity revolution with Task Manager! Create your account now and embark on a journey to efficient task management. Experience the simplicity of organizing your to-dos, setting deadlines, and achieving your goals seamlessly. Your personalized task dashboard awaits – sign up today and take control of your tasks like never before!</p>
+                    <p className="py-6">Join the productivity revolution with Task Manager! Create your account now and embark on a journey to efficient task management. Sign up today and take control of your tasks like never before!</p>
                 </div>
                 <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 p-6">
                     <form onSubmit={handleSubmit} className="card-body p-0">
