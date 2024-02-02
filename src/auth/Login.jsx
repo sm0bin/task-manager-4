@@ -52,7 +52,7 @@ const Login = () => {
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
                     <h1 className="text-5xl font-bold">Login now!</h1>
-                    <p className="py-6">To access real-time updates and keep abreast of your class schedule, log in to your account. Ensure you are always in the loop by being securely logged in to our scheduling platform.</p>
+                    <p className="py-6">Welcome back to Task Manager! Enter your credentials below to access your personalized task dashboard. Stay organized, boost productivity, and track your progress effortlessly. Forgot your password? No worries, just click on the "Forgot Password" link to reset it. Let's make every task count!</p>
                 </div>
                 <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 p-6">
                     <form onSubmit={handleSubmit} className="card-body p-0">
